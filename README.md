@@ -7,3 +7,4 @@ this is 3rd line
 This repository is the sample of web application using golang.
 ths is just one line
 hi github
+i am learnig git hub
