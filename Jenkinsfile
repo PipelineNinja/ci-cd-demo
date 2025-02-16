@@ -1,33 +1,21 @@
 pipeline {
     agent any
-    tools {
-        go 'gotest'
-    }
-    environment {
-        GO111MODULE = 'on'
-    }
     stages {
-        stage('Clone Repository') {
+        stage('Checkout Code') {
             steps {
-                git 'https://github.com/PipelineNinja/ci-cd-demo.git'
+                git branch: 'main', 
+                    url: 'https://github.com/PipelineNinja/ci-cd-demo.git',
             }
         }
-        stage('Test') {
+        stage('Build Project') {
             steps {
-                sh 'go test ./...'
+                sh 'touch app.jar' // Simulating a build process (creates a fake JAR file)
+                sh 'echo "Build complete!"'
             }
         }
-        stage('Build') {
+        stage('Archive Build') {
             steps {
-                sh 'go build -o go-webapp-sample .'
-            }
-        }
-        stage('Run') {
-            steps {
-                sh '''
-                    chmod +x go-webapp-sample
-                    ./go-webapp-sample &
-                '''
+                archiveArtifacts artifacts: 'app.jar', fingerprint: true
             }
         }
     }
